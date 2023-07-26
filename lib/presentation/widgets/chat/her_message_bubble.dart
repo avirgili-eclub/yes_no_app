@@ -50,10 +50,19 @@ class _ImageBubble extends StatelessWidget {
         bottomLeft: Radius.circular(20),
       ),
       child: Image.network(
-          'https://yesno.wtf/assets/yes/5-64c2804cc48057b94fd0b3eaf323d92c.gif',
+          'https://yesno.wtf/assets/yes/2-5df1b403f2654fa77559af1bf2332d7a.gif',
           width: size.width * 0.7,
           height: 160,
-          fit: BoxFit.cover),
-    );
+          fit: BoxFit.cover,
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return  Container(
+              width: size.width * 0.7,
+              height: 160,
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+              child: const Text('Esta escribiendo...'),
+            );
+          },
+          ));
   }
 }
