@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 
 class MessageFieldBox extends StatelessWidget {
@@ -5,6 +7,9 @@ class MessageFieldBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textController = TextEditingController();
+    final focusNode = FocusNode();
+
     final outlineInputBorder = UnderlineInputBorder(
       borderSide: const BorderSide(color: Colors.transparent),
       borderRadius: BorderRadius.circular(40),
@@ -14,28 +19,31 @@ class MessageFieldBox extends StatelessWidget {
       enabledBorder: outlineInputBorder,
       focusedBorder: outlineInputBorder,
       filled: true,
-      border: InputBorder.none,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-      suffixIcon: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
+      //border: InputBorder.none,
+      //contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+      suffixIcon: 
           IconButton(
             icon: const Icon(Icons.send_outlined),
             onPressed: () {
-              print('Valor caja de texto?');
+              final textValue = textController.value.text;
+              print('button: $textValue');
+              textController.clear();
             },
           ),
-        ],
-      ),
     );
 
     return TextFormField(
+      onTapOutside: (event) {
+        focusNode.unfocus();
+      },
+      controller: textController,
+      keyboardAppearance: Brightness.dark,
+      focusNode: focusNode,
       decoration: inputDecoration,
       onFieldSubmitted: (value) {
         print('Submit value $value');
-      },
-      onChanged: (value) {
-        print('Change value $value');
+        textController.clear();
+        focusNode.requestFocus();
       },
     );
   }
