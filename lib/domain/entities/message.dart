@@ -1,9 +1,9 @@
 class Message {
-  final String message;
+  final String text;
   final String? imageUrl;
   final Sender sender;
 
-  Message({required this.message, this.imageUrl, required this.sender});
+  Message({required this.text, this.imageUrl, required this.sender});
 }
 
 enum Sender {

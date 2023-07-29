@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:yes_no_app/domain/entities/message.dart';
 
 class HerMessageBubble extends StatelessWidget {
-  const HerMessageBubble({super.key});
+  final Message message;
+
+  const HerMessageBubble({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
+    final String image = message.imageUrl!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -22,7 +26,7 @@ class HerMessageBubble extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Text(
-              'Lorem Ipsum lorem upsun dolor sit',
+              message.text,
               style: TextStyle(
                 color: colors.onPrimary,
               ),
@@ -30,9 +34,9 @@ class HerMessageBubble extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 5),
-
+        
         //Todo: image
-        _ImageBubble(),
+        _ImageBubble(image),
         const SizedBox(height: 10)
       ],
     );
@@ -40,6 +44,8 @@ class HerMessageBubble extends StatelessWidget {
 }
 
 class _ImageBubble extends StatelessWidget {
+  final String imageUrl;
+  const _ImageBubble(this.imageUrl);
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -50,7 +56,7 @@ class _ImageBubble extends StatelessWidget {
         bottomLeft: Radius.circular(20),
       ),
       child: Image.network(
-          'https://yesno.wtf/assets/yes/2-5df1b403f2654fa77559af1bf2332d7a.gif',
+          imageUrl,
           width: size.width * 0.7,
           height: 160,
           fit: BoxFit.cover,
@@ -60,7 +66,7 @@ class _ImageBubble extends StatelessWidget {
               width: size.width * 0.7,
               height: 160,
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-              child: const Text('Esta escribiendo...'),
+              child: const Text('Cargando...'),
             );
           },
           ));
